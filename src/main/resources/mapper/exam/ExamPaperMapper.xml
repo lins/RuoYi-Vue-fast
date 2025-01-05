@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.exam.mapper.ExamPaperMapper">
+    
+    <resultMap type="ExamPaper" id="ExamPaperResult">
+        <result property="id"            column="id"             />
+        <result property="typeCode"      column="type_code"      />
+        <result property="name"          column="name"           />
+        <result property="year"          column="year"           />
+        <result property="month"         column="month"          />
+        <result property="difficulty"    column="difficulty"     />
+        <result property="level"         column="level"          />
+        <result property="duration"      column="duration"       />
+        <result property="totalScore"    column="total_score"    />
+        <result property="passScore"     column="pass_score"     />
+        <result property="questionCount" column="question_count" />
+        <result property="status"        column="status"         />
+        <result property="createBy"      column="create_by"      />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"      column="update_by"      />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"        column="remark"         />
+    </resultMap>
+
+    <sql id="selectExamPaperVo">
+        select id, type_code, name, year, month, difficulty, level, duration, total_score, pass_score, question_count, status, create_by, create_time, update_by, update_time, remark
+        from exam_paper
+    </sql>
+
+    <select id="selectExamPaperList" parameterType="ExamPaper" resultMap="ExamPaperResult">
+        <include refid="selectExamPaperVo"/>
+        <where>  
+            <if test="typeCode != null  and typeCode != ''"> and type_code = #{typeCode}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="year != null "> and year = #{year}</if>
+            <if test="month != null "> and month = #{month}</if>
+            <if test="difficulty != null  and difficulty != ''"> and difficulty = #{difficulty}</if>
+            <if test="level != null"> and level = #{level}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectExamPaperByPaperId" parameterType="Long" resultMap="ExamPaperResult">
+        <include refid="selectExamPaperVo"/>
+        where id = #{paperId}
+    </select>
+        
+    <insert id="insertExamPaper" parameterType="ExamPaper" useGeneratedKeys="true" keyProperty="id">
+        insert into exam_paper
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="typeCode != null">type_code,</if>
+            <if test="name != null">name,</if>
+            <if test="year != null">year,</if>
+            <if test="month != null">month,</if>
+            <if test="difficulty != null">difficulty,</if>
+            <if test="level != null">level,</if>
+            <if test="duration != null">duration,</if>
+            <if test="totalScore != null">total_score,</if>
+            <if test="passScore != null">pass_score,</if>
+            <if test="questionCount != null">question_count,</if>
+            <if test="status != null">status,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="typeCode != null">#{typeCode},</if>
+            <if test="name != null">#{name},</if>
+            <if test="year != null">#{year},</if>
+            <if test="month != null">#{month},</if>
+            <if test="difficulty != null">#{difficulty},</if>
+            <if test="level != null">#{level},</if>
+            <if test="duration != null">#{duration},</if>
+            <if test="totalScore != null">#{totalScore},</if>
+            <if test="passScore != null">#{passScore},</if>
+            <if test="questionCount != null">#{questionCount},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateExamPaper" parameterType="ExamPaper">
+        update exam_paper
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="typeCode != null">type_code = #{typeCode},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="year != null">year = #{year},</if>
+            <if test="month != null">month = #{month},</if>
+            <if test="difficulty != null">difficulty = #{difficulty},</if>
+            <if test="level != null">level = #{level},</if>
+            <if test="duration != null">duration = #{duration},</if>
+            <if test="totalScore != null">total_score = #{totalScore},</if>
+            <if test="passScore != null">pass_score = #{passScore},</if>
+            <if test="questionCount != null">question_count = #{questionCount},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteExamPaperByPaperId" parameterType="Long">
+        delete from exam_paper where id = #{paperId}
+    </delete>
+
+    <delete id="deleteExamPaperByPaperIds" parameterType="String">
+        delete from exam_paper where id in 
+        <foreach item="paperId" collection="array" open="(" separator="," close=")">
+            #{paperId}
+        </foreach>
+    </delete>
+</mapper>
