@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.exam.mapper.ExamQuestionMapper">
+    
+    <resultMap type="ExamQuestion" id="ExamQuestionResult">
+        <result property="id"    column="id"    />
+        <result property="paperId"    column="paper_id"    />
+        <result property="questionType"    column="question_type"    />
+        <result property="questionScore"    column="question_score"    />
+        <result property="questionText"    column="question_text"    />
+        <result property="optionA"    column="option_a"    />
+        <result property="optionB"    column="option_b"    />
+        <result property="optionC"    column="option_c"    />
+        <result property="optionD"    column="option_d"    />
+        <result property="correctAnswer"    column="correct_answer"    />
+        <result property="analysis"    column="analysis"    />
+        <result property="sortOrder"    column="sort_order"    />
+        <result property="status"    column="status"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectExamQuestionVo">
+        select id, paper_id, question_type, question_score, question_text, option_a, option_b, option_c, option_d, correct_answer, analysis, sort_order, status, create_time, update_time, remark from exam_question
+    </sql>
+
+    <select id="selectExamQuestionList" parameterType="ExamQuestion" resultMap="ExamQuestionResult">
+        <include refid="selectExamQuestionVo"/>
+        <where>  
+            <if test="paperId != null "> and paper_id = #{paperId}</if>
+            <if test="questionType != null  and questionType != ''"> and question_type = #{questionType}</if>
+            <if test="questionScore != null "> and question_score = #{questionScore}</if>
+            <if test="questionText != null  and questionText != ''"> and question_text = #{questionText}</if>
+            <if test="optionA != null  and optionA != ''"> and option_a = #{optionA}</if>
+            <if test="optionB != null  and optionB != ''"> and option_b = #{optionB}</if>
+            <if test="optionC != null  and optionC != ''"> and option_c = #{optionC}</if>
+            <if test="optionD != null  and optionD != ''"> and option_d = #{optionD}</if>
+            <if test="correctAnswer != null  and correctAnswer != ''"> and correct_answer = #{correctAnswer}</if>
+            <if test="analysis != null  and analysis != ''"> and analysis = #{analysis}</if>
+            <if test="sortOrder != null "> and sort_order = #{sortOrder}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+        </where>
+        order by sort_order asc
+    </select>
+    
+    <select id="selectExamQuestionById" parameterType="Long" resultMap="ExamQuestionResult">
+        <include refid="selectExamQuestionVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectExamQuestionByPaperId" parameterType="Long" resultMap="ExamQuestionResult">
+        <include refid="selectExamQuestionVo"/>
+        where paper_id = #{paperId}
+        order by sort_order asc
+    </select>
+        
+    <insert id="insertExamQuestion" parameterType="ExamQuestion" useGeneratedKeys="true" keyProperty="id">
+        insert into exam_question
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="paperId != null">paper_id,</if>
+            <if test="questionType != null">question_type,</if>
+            <if test="questionScore != null">question_score,</if>
+            <if test="questionText != null">question_text,</if>
+            <if test="optionA != null">option_a,</if>
+            <if test="optionB != null">option_b,</if>
+            <if test="optionC != null">option_c,</if>
+            <if test="optionD != null">option_d,</if>
+            <if test="correctAnswer != null">correct_answer,</if>
+            <if test="analysis != null">analysis,</if>
+            <if test="sortOrder != null">sort_order,</if>
+            <if test="status != null">status,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="paperId != null">#{paperId},</if>
+            <if test="questionType != null">#{questionType},</if>
+            <if test="questionScore != null">#{questionScore},</if>
+            <if test="questionText != null">#{questionText},</if>
+            <if test="optionA != null">#{optionA},</if>
+            <if test="optionB != null">#{optionB},</if>
+            <if test="optionC != null">#{optionC},</if>
+            <if test="optionD != null">#{optionD},</if>
+            <if test="correctAnswer != null">#{correctAnswer},</if>
+            <if test="analysis != null">#{analysis},</if>
+            <if test="sortOrder != null">#{sortOrder},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateExamQuestion" parameterType="ExamQuestion">
+        update exam_question
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="paperId != null">paper_id = #{paperId},</if>
+            <if test="questionType != null">question_type = #{questionType},</if>
+            <if test="questionScore != null">question_score = #{questionScore},</if>
+            <if test="questionText != null">question_text = #{questionText},</if>
+            <if test="optionA != null">option_a = #{optionA},</if>
+            <if test="optionB != null">option_b = #{optionB},</if>
+            <if test="optionC != null">option_c = #{optionC},</if>
+            <if test="optionD != null">option_d = #{optionD},</if>
+            <if test="correctAnswer != null">correct_answer = #{correctAnswer},</if>
+            <if test="analysis != null">analysis = #{analysis},</if>
+            <if test="sortOrder != null">sort_order = #{sortOrder},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteExamQuestionById" parameterType="Long">
+        delete from exam_question where id = #{id}
+    </delete>
+
+    <delete id="deleteExamQuestionByIds" parameterType="String">
+        delete from exam_question where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

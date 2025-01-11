@@ -18,6 +18,7 @@ import com.ruoyi.framework.aspectj.lang.enums.BusinessType;
 import com.ruoyi.exam.domain.ExamRecord;
 import com.ruoyi.exam.service.IExamRecordService;
 import com.ruoyi.framework.web.page.TableDataInfo;
+import com.ruoyi.exam.dto.ExamSubmitDTO;
 
 /**
  * 考试记录Controller
@@ -84,5 +85,14 @@ public class ExamRecordController extends BaseController
     public AjaxResult remove(@PathVariable Long[] recordIds)
     {
         return toAjax(examRecordService.deleteExamRecordByRecordIds(recordIds));
+    }
+
+    /**
+     * 提交考试
+     */
+    @PostMapping("/submit")
+    public AjaxResult submit(@RequestBody ExamSubmitDTO examSubmit)
+    {
+        return success(examRecordService.submitExam(examSubmit));
     }
 }

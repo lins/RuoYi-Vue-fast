@@ -2,6 +2,7 @@ package com.ruoyi.exam.service;
 
 import java.util.List;
 import com.ruoyi.exam.domain.ExamRecord;
+import com.ruoyi.exam.dto.ExamSubmitDTO;
 
 /**
  * 考试记录Service接口
@@ -57,4 +58,9 @@ public interface IExamRecordService
      * @return 结果
      */
     public int deleteExamRecordByRecordId(Long recordId);
+
+    /**
+     * 提交考试
+     */
+    public ExamRecord submitExam(ExamSubmitDTO examSubmit);
 }

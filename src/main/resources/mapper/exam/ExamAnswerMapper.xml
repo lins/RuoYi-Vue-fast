@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.exam.mapper.ExamAnswerMapper">
+    
+    <resultMap type="ExamAnswer" id="ExamAnswerResult">
+        <result property="id"    column="id"    />
+        <result property="recordId"    column="record_id"    />
+        <result property="questionId"    column="question_id"    />
+        <result property="userAnswer"    column="user_answer"    />
+        <result property="isCorrect"    column="is_correct"    />
+        <result property="score"    column="score"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectExamAnswerVo">
+        select id, record_id, question_id, user_answer, is_correct, score, create_time, update_time, remark 
+        from exam_answer
+    </sql>
+
+    <select id="selectExamAnswerList" parameterType="ExamAnswer" resultMap="ExamAnswerResult">
+        <include refid="selectExamAnswerVo"/>
+        <where>  
+            <if test="recordId != null "> and record_id = #{recordId}</if>
+            <if test="questionId != null "> and question_id = #{questionId}</if>
+            <if test="userAnswer != null  and userAnswer != ''"> and user_answer = #{userAnswer}</if>
+            <if test="isCorrect != null  and isCorrect != ''"> and is_correct = #{isCorrect}</if>
+            <if test="score != null "> and score = #{score}</if>
+        </where>
+    </select>
+    
+    <select id="selectExamAnswerById" parameterType="Long" resultMap="ExamAnswerResult">
+        <include refid="selectExamAnswerVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertExamAnswer" parameterType="ExamAnswer" useGeneratedKeys="true" keyProperty="id">
+        insert into exam_answer
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="recordId != null">record_id,</if>
+            <if test="questionId != null">question_id,</if>
+            <if test="userAnswer != null">user_answer,</if>
+            <if test="isCorrect != null">is_correct,</if>
+            <if test="score != null">score,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="recordId != null">#{recordId},</if>
+            <if test="questionId != null">#{questionId},</if>
+            <if test="userAnswer != null">#{userAnswer},</if>
+            <if test="isCorrect != null">#{isCorrect},</if>
+            <if test="score != null">#{score},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateExamAnswer" parameterType="ExamAnswer">
+        update exam_answer
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="recordId != null">record_id = #{recordId},</if>
+            <if test="questionId != null">question_id = #{questionId},</if>
+            <if test="userAnswer != null">user_answer = #{userAnswer},</if>
+            <if test="isCorrect != null">is_correct = #{isCorrect},</if>
+            <if test="score != null">score = #{score},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteExamAnswerById" parameterType="Long">
+        delete from exam_answer where id = #{id}
+    </delete>
+
+    <delete id="deleteExamAnswerByIds" parameterType="String">
+        delete from exam_answer where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
