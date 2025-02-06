@@ -29,6 +29,7 @@ create table exam_paper (
   year            int(4)          not null                   comment '年份',
   month           int(2)          not null                   comment '月份',
   difficulty      char(1)         not null                   comment '难度（1简单 2中等 3困难）',
+  level           int(1)          default null               comment '级别（1-8级）',
   duration        int(4)          not null                   comment '考试时长（分钟）',
   total_score     decimal(5,1)    not null                   comment '总分',
   pass_score      decimal(5,1)    not null                   comment '及格分数',
@@ -121,9 +122,9 @@ VALUES
 -- ----------------------------
 -- 初始化试卷数据
 -- ----------------------------
-INSERT INTO exam_paper (id, type_code, name, year, month, difficulty, duration, total_score, pass_score, question_count, status, create_time, update_time, remark)
+INSERT INTO exam_paper (id, type_code, name, year, month, difficulty, level, duration, total_score, pass_score, question_count, status, create_time, update_time, remark)
 VALUES 
-(1, 'python', 'CEIT Python二级考试样题（2024年3月）', 2024, 3, '2', 120, 100, 60, 25, '0', sysdate(), sysdate(), '适用于Python二级考试备考');
+(1, 'CEIT_PYTHON', 'CEIT Python二级考试样题（2024年3月）', 2024, 3, '2', 2, 120, 100, 60, 25, '0', sysdate(), sysdate(), '适用于Python二级考试备考');
 
 -- ----------------------------
 -- 初始化试题数据
